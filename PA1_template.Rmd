@@ -10,7 +10,7 @@ output:
 
 Load the file after download to working directory
 
-```{r}
+```{r echo=TRUE}
 Tdata <- read.csv("activity.csv")
 head(Tdata)
 
@@ -22,7 +22,7 @@ head(Tdata)
 Once data is imported we use aggregate function to calculate total steps for each day.
 Then plot histogram... and calculate mean and median
 
-```{r}
+```{r echo=TRUE}
 Totalstepsperday <- aggregate(Tdata$steps, by=list(date=Tdata$date),sum, na.rm = TRUE)
 MeanTotalstepsperday <- mean(Totalstepsperday$x)
 print(paste("Mean of total steps per day is:", MeanTotalstepsperday))
@@ -41,7 +41,7 @@ with(Totalstepsperday, {
 
 Then we find average steps per day across all intervals using aggregate function and compute interval that has maximum average steps.
 
-```{r}
+```{r echo=TRUE}
 Stepsperinterval <- aggregate(steps ~ interval, data = Tdata, FUN = mean)
 with(Stepsperinterval, {plot(interval, steps, type="l", xlab="intervals", ylab="mean of steps", 
 main="Average Daily Activity Pattern")})
@@ -54,7 +54,7 @@ print(paste("Interval with maximun average steps is:", Intervalmaxsteps))
 
 We then calculate and the total number of missing values in the dataset and then replace NA values with the mean for that interval.
 
-```{r}
+```{r echo=TRUE}
 Totalmissing <- sum(is.na(Tdata$steps))
 Totalnumberofobservations <- nrow(Tdata)
 Tdata$missingsteps <- Tdata$steps
@@ -78,7 +78,7 @@ By replacing the NAs in steps with mean of the intervals we find that the mean a
 
 We find that there is significant difference in activity between weekdays and weekends.There is continuous up and down activity on weekdays where as on weekend significant part of activity is limited to the early set of timeintervals.
 
-```{r}
+```{r echo=TRUE}
 Tdata$dayofweek <- weekdays(as.Date(Tdata$date))
 Weekend <- c("Sunday","Saturday")
 for (variable in 1:Totalnumberofobservations) 
